@@ -1,2 +1,2 @@
 # pyimcompare
-Pyimcompare is a library that should be utilized in order to find images similar to a provided image inside of a larger image. This has a variety of applications, such as screen scraping.
+Pyimcompare was created to be able to find similar images within a larger image, likely to be used for screen scraping.
