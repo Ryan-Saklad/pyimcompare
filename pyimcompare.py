@@ -10,7 +10,6 @@ class Image:
         self.bottomRight: tuple = (pt[0] + w, pt[1] + h)
         self.center: tuple = ((self.topLeft[0] + self.topRight[0]) / 2, (self.topLeft[1] + self.bottomRight[1]) / 2)
 
-
 def findImage(smallImg: Union[str, 'numpy.ndarray'], largeImg: Union[str, 'numpy.ndarray'] = 'screen',
               threshold: float = .7, maxResults: int = 1, delay: float = 0):
 
