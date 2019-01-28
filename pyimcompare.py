@@ -11,7 +11,7 @@ class Image:
         self.center: tuple = ((self.topLeft[0] + self.topRight[0]) / 2, (self.topLeft[1] + self.bottomRight[1]) / 2)
 
 def findImage(smallImg: Union[str, 'numpy.ndarray'], largeImg: Union[str, 'numpy.ndarray'] = 'screen',
-              threshold: float = .7, maxResults: int = 1, delay: float = 0):
+              threshold: float = .7, maxResults: int = 1, delay: float = 0) -> List[Image]:
 
     if delay > 0:
         import time
