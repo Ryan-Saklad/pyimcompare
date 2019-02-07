@@ -2,16 +2,18 @@ import cv2
 import numpy as np
 from typing import List, Union
 
+
 class Image:
-    def __init__(self, pt: list, h: int, w: int) -> None:
+    def __init__(self, pt: list, height: int, width: int) -> None:
         self.topLeft: tuple = tuple(pt)
-        self.topRight: tuple = (pt[0] + w, pt[1])
-        self.bottomLeft: tuple = (pt[0], pt[1] + h)
-        self.bottomRight: tuple = (pt[0] + w, pt[1] + h)
+        self.topRight: tuple = (pt[0] + width, pt[1])
+        self.bottomLeft: tuple = (pt[0], pt[1] + height)
+        self.bottomRight: tuple = (pt[0] + width, pt[1] + height)
         self.center: tuple = ((self.topLeft[0] + self.topRight[0]) / 2, (self.topLeft[1] + self.bottomRight[1]) / 2)
 
+
 def findImage(smallImg: Union[str, 'numpy.ndarray'], largeImg: Union[str, 'numpy.ndarray'] = 'screen',
-              threshold: float = .7, maxResults: int = 1, delay: float = 0) -> List[Image]:
+              threshold: float = .7, maxResults: int = 1, delay: float = 0):
 
     if delay > 0:
         import time
@@ -41,16 +43,16 @@ def findImage(smallImg: Union[str, 'numpy.ndarray'], largeImg: Union[str, 'numpy
         raise FileNotFoundError(
             "The large image was not found or you have insufficient permisisons to open it.") from None
 
-    h: int
-    w: int
+    height: int
+    width: int
 
-    h, w = smallImg.shape
+    height, width = smallImg.shape
     result: 'numpy.ndarray' = cv2.matchTemplate(largeImg, smallImg, cv2.TM_CCOEFF_NORMED)
     loc: tuple = np.where(result >= threshold)
     matches: List[Image] = []
 
     for pt in zip(*loc[::-1]):
-        matches.append(Image(list(pt), h, w))
+        matches.append(Image(list(pt), height, width))
 
     if len(matches) == 0:
         return None
@@ -67,7 +69,7 @@ def findImage(smallImg: Union[str, 'numpy.ndarray'], largeImg: Union[str, 'numpy
         loc: tuple = np.where(result >= increasedThreshold)
 
         for pt in zip(*loc[::-1]):
-            matches.append(Image(list(pt), h, w))
+            matches.append(Image(list(pt), height, width))
 
         if len(matches) == 0:
             highThreshold = increasedThreshold
